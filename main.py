@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware
 from rembg import remove
@@ -34,5 +35,7 @@ async def remove_bg(file: UploadFile = File(...)):  # ✅ Expecting "file"
 
     return Response(content=img_io.getvalue(), media_type="image/png")
 
+# ✅ Automatically detect PORT from environment (Render requires this)
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))  # Default to 8000 if PORT is not set
+    uvicorn.run(app, host="0.0.0.0", port=port, reload=True)
