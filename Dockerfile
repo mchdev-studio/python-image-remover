@@ -10,8 +10,11 @@ COPY . /app
 # Install dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8000 for FastAPI
-EXPOSE 8000
+# Ensure onnxruntime is installed
+RUN pip install --no-cache-dir onnxruntime
 
-# Run the app with Uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose the port dynamically assigned by Render
+EXPOSE $PORT
+
+# Run the app with Uvicorn using the dynamic PORT
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT}"]
