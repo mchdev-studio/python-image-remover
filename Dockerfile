@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy the app files
 COPY . /app
 
-# Install dependencies
-RUN pip install --no-cache-dir fastapi uvicorn rembg pillow
+# Install dependencies from requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 8000 for FastAPI
 EXPOSE 8000
